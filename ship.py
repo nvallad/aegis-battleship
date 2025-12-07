@@ -12,10 +12,9 @@ class Ship:
         self.hits = set()      # Set[(row, col)]
 
     def place(self, start, direction):
-        """
-        start: (row, col)
-        direction: 'H' or 'V'
-        """
+        # start: (row, col)
+        # direction: 'H' or 'V'
+        
         r, c = start
         self.positions = []
 
@@ -27,9 +26,9 @@ class Ship:
             else:
                 raise ValueError("Direction must be 'H' or 'V'")
 
-    def register_hit(self, coord):
-        if coord in self.positions:
-            self.hits.add(coord)
+    def register_hit(self, pos):
+        if (pos) in self.positions:
+            self.hits.add(pos)
 
     def is_sunk(self) -> bool:
         return len(self.hits) == self.size

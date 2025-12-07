@@ -46,31 +46,27 @@ class Board:
 
         return True
 
-    def take_shot(self, coord):
+    def take_shot(self, row, col):
         """
-        coord: (row, col)
-        returns: 'miss', 'hit', 'sunk:<ship name>'
+        Process an attack at (row, col).
+        Returns:
+            "hit", "miss", or ("sunk", ship)
         """
-        r, c = coord
+        cell = self.grid[row][col]
 
-        if not self.in_bounds(r, c):
-            return "invalid"
-
-        if coord in self.shots_taken:
-            return "repeat"
-
-        self.shots_taken.add(coord)
+        # Already hit
+        if cell in ["X", "O"]:
+            return "miss"
 
         for ship in self.ships:
-            if coord in ship.positions:
-                ship.register_hit(coord)
-                self.grid[r][c] = "X"
-
+            if (row, col) in ship.positions:
+                ship.register_hit((row, col))
+                self.grid[row][col] = "X"
                 if ship.is_sunk():
-                    return f"sunk:{ship.name}"
+                    return ("sunk", ship)
                 return "hit"
 
-        self.grid[r][c] = "O"
+        self.grid[row][col] = "O"
         return "miss"
 
     def all_ships_sunk(self) -> bool:
