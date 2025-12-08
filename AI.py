@@ -24,9 +24,7 @@ class AI:
         self.previous_shots = set()
         self.hit_stack = []   # for medium/hard targeting behavior
 
-    # --------------------------------------------------------------
     # SHIP PLACEMENT
-    # --------------------------------------------------------------
     def place_ships(self, ship_list):
         
         # Given a list of Ship objects, place them on the Player's board.
@@ -41,10 +39,8 @@ class AI:
                 direction = random.choice(["H", "V"])
 
                 placed = self.player.add_ship(ship, (row, col), direction)
-
-    # --------------------------------------------------------------
+                
     # ATTACK DECISION
-    # --------------------------------------------------------------
     def choose_shot(self, opponent_board: Board) -> tuple:
         # Decide where to fire based on difficulty level.
         # Returns (row, col).
@@ -55,9 +51,7 @@ class AI:
         else:  # hard
             return self._choose_shot_hard(opponent_board)
 
-    # ---------------------
     # EASY MODE (random)
-    # ---------------------
     def _choose_shot_easy(self, opponent_board):
         # Shoot randomly at an unshot tile.
         rows = opponent_board.rows
@@ -72,9 +66,7 @@ class AI:
         self.previous_shots.add(choice)
         return choice
 
-    # ---------------------
     # MEDIUM MODE (hunt + target)
-    # ---------------------
     def _choose_shot_medium(self, opponent_board):
         # Hunt mode: random until a hit.
         # Target mode: check tiles around hits.
@@ -82,9 +74,7 @@ class AI:
         # TODO: Implement targeting behavior
         return self._choose_shot_easy(opponent_board)
 
-    # ---------------------
     # HARD MODE (advanced patterning or probability map)
-    # ---------------------
     def _choose_shot_hard(self, opponent_board):
         # Use a smarter approach: parity, probability density,
         # or pattern scanning (to be implemented).
@@ -92,9 +82,7 @@ class AI:
         # TODO: Implement probability targeting
         return self._choose_shot_easy(opponent_board)
 
-    # --------------------------------------------------------------
     # FULL TURN ACTION
-    # --------------------------------------------------------------
     def take_turn(self, opponent_player: Player):
         # AI selects a shot, then uses Player.fire_at()
         # to actually take the shot.

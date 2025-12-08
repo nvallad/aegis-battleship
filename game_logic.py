@@ -67,6 +67,12 @@ class GameLogic:
         # Switch turn if miss
         if result == "miss":
             self.end_turn()
+        
+        elif result == "hit":
+            self.end_turn()
+            
+        else:  # sunk
+            self.end_turn()
 
         return result
 
